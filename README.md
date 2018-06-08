@@ -142,12 +142,11 @@ A well written README file can enhance your project and portfolio.  Develop your
 
 
 ## Compilation
-___
 
 Code compiles without errors with cmake and make. No changes were made in cmake configuration.
 
 ## Valid Trajectories
-___
+
 
 #### The car is able to drive at least 4.32 miles without incident.
 I ran simulator for 14-15 miles without any incident.
@@ -163,7 +162,7 @@ No collisions were seen. The car stays in its lane, except for the time between 
 The car is able to change lanes smoothly.
 
 ## Reflection
-___
+
 
 In path planning project we need to generate a path consisting of points (x,y) which the car will visit after every 0.02 sec. The simulator returs us the previously followed path if the car is running and will return an empty path if car has just started or it has reached its destination.
 
