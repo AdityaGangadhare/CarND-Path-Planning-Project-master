@@ -165,5 +165,19 @@ The car is able to change lanes smoothly.
 ## Reflection
 ___
 
+In path planning project we need to generate a path consisting of points (x,y) which the car will visit after every 0.02 sec. The simulator returs us the previously followed path if the car is running and will return an empty path if car has just started or it has reached its destination.
 
+The code is divided into three parts-
+
+### Prediction
+
+Prediction deals with the telemetry and the sensor fusion data. The data collected by the sensors is used to predict if its safe to change lane or are there any other cars blocking the transition or to keep following the same lane if lane changing is dangerous.
+
+### Behavior
+
+Here the actual decision is made based on the above prediction of other cars position after end of last planned trajectory that is it safe to continue traveling with the same velocity or any lane changing is required.
+
+### Trajectory Generation
+
+Here new trajectory is calculated based on the speed and lane output from behavior, car coordinates and past path points. The new path starts with a certain number of points from the previous path, which is received from the simulator at each iteration. From there a spline is generated beginning with the last two points of the previous path that have been kept (or the current position, heading, and velocity if no current path exists), and ending with two points 30 and 60 meters ahead and in the target lane. This produces a smooth x and y trajectory. To prevent excessive acceleration and jerk, the velocity is only allowed increment or decrement by a small amount.
 

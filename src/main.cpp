@@ -242,11 +242,14 @@ int main() {
           	// Sensor Fusion Data, a list of all other cars on the same side of the road.
           	auto sensor_fusion = j[1]["sensor_fusion"];
 						
-		// TODO: define a path made up of (x,y) points that the car will visit sequentially every .02 seconds
+		  // TODO: define a path made up of (x,y) points that the car will visit sequentially every .02 seconds
 
       if (prev_size > 0){
         car_s = end_path_s;
       }
+      /////////////////////////////////////////////////////////////////////////////////////////////////////
+      //                                         Prediction                                              //
+      /////////////////////////////////////////////////////////////////////////////////////////////////////
       bool nearest_car_ahead = false;
       bool nearest_left_car = false;
       bool nearest_right_car = false;
@@ -276,16 +279,19 @@ int main() {
           // Find on which lane nearest other cars are
           if ( other_car_lane == lane ) {
             // Car in our lane.
-            nearest_car_ahead |= check_car_s > car_s && check_car_s - car_s < 20;
+            nearest_car_ahead |= check_car_s > car_s && check_car_s - car_s < 30;
           } else if ( other_car_lane - lane == -1 ) {
             // Car left
-            nearest_left_car |= car_s - 20 < check_car_s && car_s + 30 > check_car_s;
+            nearest_left_car |= car_s - 35< check_car_s && car_s + 30 > check_car_s;
           } else if ( other_car_lane - lane == 1 ) {
             // Car right
-            nearest_right_car |= car_s - 20 < check_car_s && car_s + 30 > check_car_s;
+            nearest_right_car |= car_s - 35 < check_car_s && car_s + 30 > check_car_s;
           }
       }
 
+      /////////////////////////////////////////////////////////////////////////////////////////////////////
+      //                                         Behavior                                                //
+      /////////////////////////////////////////////////////////////////////////////////////////////////////
           
       if ( nearest_car_ahead ) { // Car ahead
         if ( !nearest_left_car && lane > 0 ) {
@@ -315,9 +321,11 @@ int main() {
       double ref_y = car_y;
       double ref_yaw = deg2rad(car_yaw);
 
-      // Do I have have previous points
+      /////////////////////////////////////////////////////////////////////////////////////////////////////
+      //                                         Trajectory                                              //
+      /////////////////////////////////////////////////////////////////////////////////////////////////////
       if ( prev_size < 2 ) {
-          // There are not too many...
+          
           double prev_car_x = car_x - cos(car_yaw);
           double prev_car_y = car_y - sin(car_yaw);
 
